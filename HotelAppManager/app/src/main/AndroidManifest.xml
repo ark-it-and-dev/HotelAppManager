@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".activities.NovoProduto" >
         </activity>
+        <activity android:name=".activities.NovoUsuario" >
+        </activity>
     </application>
 
 </manifest>
