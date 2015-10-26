@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">HotelAppManager</string>
     <string name="action_settings">Settings</string>
+
+    <array name="categorias">
+        <item>Bebidas</item>
+        <item>Pratos</item>
+    </array>
 </resources>
