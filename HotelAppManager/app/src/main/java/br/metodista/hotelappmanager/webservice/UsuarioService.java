@@ -22,18 +22,24 @@ import br.metodista.hotelappmanager.model.Usuario;
  * Created by Gustavo Assalin on 26/10/2015.
  */
 public class UsuarioService {
-    private static final String URL = "https://openws.herokuapp.com/hotelappusuarios";
-    private static final String API_KEY = "b4111c92d8a0f3d61f3cfd87e9a4eb75";
+//    private static final String URL = "https://openws.herokuapp.com/hotelappusuarios";
+//    private static final String API_KEY = "?apiKey=b4111c92d8a0f3d61f3cfd87e9a4eb75";
+
+    private URL url;
 
     private HttpURLConnection urlConnection = null;
+
+    private URL getUrl() throws Exception {
+        url = new URL("https://openws.herokuapp.com/usuarios?apiKey=ab8647942e1d0a115b28891b9c07a2b7");
+        return url;
+    }
 
     public List<Usuario> getAll() {
         List<Usuario> usuarios = new ArrayList<>();
         HttpURLConnection urlConnection = null;
 
         try {
-            java.net.URL url = new URL(URL + API_KEY);
-            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) getUrl().openConnection();
 
             InputStream in =  new BufferedInputStream(urlConnection.getInputStream());
             Scanner s = new Scanner(in);
@@ -50,13 +56,9 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public boolean save(Object usuario) {
-        boolean retorno = false;
-
+    public void save(Usuario usuario) {
         try {
-            URL url = new URL(URL + API_KEY);
-
-            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) getUrl().openConnection();
             urlConnection.setDoOutput(true);
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type", "application/json");
@@ -68,36 +70,41 @@ public class UsuarioService {
             Gson gson = new Gson();
             String json = gson.toJson(usuario);
             w.write(json);
+            w.close();
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
             Scanner s = new Scanner(in);
             String conteudo = s.nextLine();
 
-            w.close();
+
             in.close();
-            retorno = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             urlConnection.disconnect();
         }
-
-        return retorno;
     }
 
-    public void delete(String id) {
+    public boolean delete(String id) {
         HttpURLConnection urlConnection = null;
 
+        boolean funcionou = false;
+
         try {
-            URL url = new URL(URL + "/" + id + API_KEY);
+            URL url = new URL("https://openws.herokuapp.com/usuarios" + "/" + id + "?apiKey=ab8647942e1d0a115b28891b9c07a2b7");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("DELETE");
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            funcionou = true;
         } catch (Exception e) {
+            funcionou = false;
             throw new RuntimeException(e);
         } finally {
             urlConnection.disconnect();
         }
+
+        return funcionou;
     }
 }
