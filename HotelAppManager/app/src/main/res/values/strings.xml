@@ -8,4 +8,8 @@
     </array>
     <string name="title_activity_manager">Manager</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="novo_pedido">Novo Pedido</string>
+    <string name="novo_usuario">Novo Usuario</string>
+    <string name="novo_produto">Novo Produto</string>
 </resources>

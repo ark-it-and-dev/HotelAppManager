@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.metodista.hotelappmanager" >
+    package="br.metodista.hotelappmanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,15 +9,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".activities.NovoProduto" >
-        </activity>
-        <activity android:name=".activities.NovoUsuario" >
-        </activity>
-        <activity
-            android:name=".activities.Manager"
-            android:label="@string/title_activity_manager"
-            android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.NovoProduto" />
+        <activity android:name=".activities.NovoUsuario" />
+        <activity android:name=".activities.NovoPedido" />
+        <activity android:name=".activities.Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
