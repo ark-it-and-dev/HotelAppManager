@@ -6,15 +6,20 @@ import br.metodista.hotelappmanager.enumeration.CategoriaProduto;
  * Created by Gustavo Assalin on 25/10/2015.
  */
 public class Produto {
-    private static Produto produto;
+    private Produto produto;
 
+    private String _id;
     private String nome;
     private String descricao;
     private double preco;
     private CategoriaProduto categoria;
 
-    private Produto() {
+    public String get_id() {
+        return _id;
+    }
 
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getNome() {
@@ -49,11 +54,4 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public static Produto getInstance() {
-        if(produto == null) {
-            return new Produto();
-        } else {
-            return produto;
-        }
-    }
 }

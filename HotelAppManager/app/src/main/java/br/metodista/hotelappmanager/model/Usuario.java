@@ -1,26 +1,30 @@
 package br.metodista.hotelappmanager.model;
 
+import java.util.List;
+
 /**
  * Created by Gustavo Assalin on 26/10/2015.
  */
 public class Usuario {
-    private static Usuario usuario;
-
+    private String _id;
     private String login;
     private String senha;
+    private List<Produto> listaProduto;
 
-    private Usuario() {}
-
-    public static Usuario getInstance() {
-        if(usuario == null) {
-            return new Usuario();
-        } else {
-            return usuario;
-        }
+    public List<Produto> getListaProduto() {
+        return listaProduto;
     }
 
-    public static void encerrarSessao() {
-        usuario = null;
+    public void setListaProduto(List<Produto> listaProduto) {
+        this.listaProduto = listaProduto;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getLogin() {
