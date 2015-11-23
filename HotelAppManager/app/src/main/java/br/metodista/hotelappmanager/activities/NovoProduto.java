@@ -1,5 +1,6 @@
 package br.metodista.hotelappmanager.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +28,7 @@ public class NovoProduto extends AppCompatActivity {
     private EditText txtPreco;
     private Button btnSalvar;
 
-    private Produto produto = Produto.getInstance();
+    private Produto produto = new Produto();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,29 +40,32 @@ public class NovoProduto extends AppCompatActivity {
         spinnerCategoria = (Spinner) findViewById(R.id.spinner);
         txtPreco = (EditText) findViewById(R.id.txtPreco);
 
-        String nome = txtNome.getText().toString();
-        String descricao = txtDescricao.getText().toString();
-        int categoriaSelecionada = spinnerCategoria.getSelectedItemPosition();
-        double preco = Double.valueOf(txtPreco.getText().toString());
-
-        produto.setNome(nome);
-        produto.setDescricao(descricao);
-        switch (categoriaSelecionada) {
-            case 0:
-                produto.setCategoria(CategoriaProduto.PRATO);
-                break;
-
-            case 1:
-                produto.setCategoria(CategoriaProduto.BEBIDA);
-                break;
-        }
-        produto.setPreco(preco);
-
         btnSalvar = (Button) findViewById(R.id.btnSalvar);
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String nome = txtNome.getText().toString();
+                String descricao = txtDescricao.getText().toString();
+                int categoriaSelecionada = spinnerCategoria.getSelectedItemPosition();
+                double preco = Double.valueOf(txtPreco.getText().toString());
+
+                produto.setNome(nome);
+                produto.setDescricao(descricao);
+                switch (categoriaSelecionada) {
+                    case 0:
+                        produto.setCategoria(CategoriaProduto.BEBIDA);
+                        break;
+
+                    case 1:
+                        produto.setCategoria(CategoriaProduto.PRATO);
+                        break;
+                }
+                produto.setPreco(preco);
+
                 new SalvarProduto().execute();
+
+                txtNome.setText("");
+                txtPreco.setText("");
             }
         });
     }
@@ -80,12 +84,7 @@ public class NovoProduto extends AppCompatActivity {
 
         @Override
         protected List<Produto> doInBackground(String... params) {
-            if (service.save(produto)) {
-                Toast.makeText(NovoProduto.this, "Produto Salvo com Sucesso!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(NovoProduto.this, "Falha ao Salvar!", Toast.LENGTH_SHORT).show();
-            }
-
+            service.save(produto);
             return null;
         }
 
@@ -94,6 +93,8 @@ public class NovoProduto extends AppCompatActivity {
             super.onPostExecute(produtos);
 
             dialog.dismiss();
+
+            Toast.makeText(NovoProduto.this, "Produto Salvo com Sucesso!", Toast.LENGTH_SHORT).show();
         }
     }
 }
